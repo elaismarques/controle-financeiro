@@ -14,10 +14,7 @@ firebase.auth().onAuthStateChanged(user => {
 
 function newTransaction() {
     window.location.href = "../transaction/transaction.html"
-    // console.log("funfo");
 }
-
-// findTransactions();
 
 function findTransactions(user) {
     showLoading();
@@ -29,10 +26,6 @@ function findTransactions(user) {
         console.log(error);
         alert('Erro ao recuperar transações')
     });
-
-    // setTimeout(() => {
-    //     addTransactionsToScreen(fakeTransactions);
-    // }, 1000)
 }
 
 function addTransactionsToScreen(transactions) {
@@ -55,8 +48,6 @@ function addTransactionsToScreen(transactions) {
 
         orderedList.appendChild(li);
     });
-    // console.log(transactions)
-
 }
 
 function createTransactionListItem(transaction) {
@@ -115,41 +106,3 @@ function formatDate(date) {
 function formatMoney(money) {
     return `${money.currency} ${money.value.toFixed(2)}`
 }
-
-
-// const fakeTransactions = [{
-//     type: 'expense',
-//     date: '2023-01-02',
-//     money: {
-//         currency: "R$",
-//         value: 10
-//     },
-//     transactionType: 'Supermercado'
-// }, {
-//     type: 'income',
-//     date: '2023-02-03',
-//     money: {
-//         currency: 'R$',
-//         value: 5000
-//     },
-//     transactionType: 'Salario',
-//     description: 'Empresa A'
-// }, {
-//     type: 'expense',
-//     date: '2023-03-04',
-//     money: {
-//         currency: "R$",
-//         value: 16
-//     },
-//     transactionType: 'Transporte',
-//     description: 'Metro'
-// }, {
-//     type: 'expense',
-//     date: '2023-04-05',
-//     money: {
-//         currency: "R$",
-//         value: 1000
-//     },
-//     transactionType: 'Aluguel',
-//     description: 'Mensalidade'
-// }]
