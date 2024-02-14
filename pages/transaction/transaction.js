@@ -1,12 +1,21 @@
-if (!isNewTransaction()) {
-    const uid = getTransactionUid();
-
-    findTransactionByUid(uid);
-}
+// if (!isNewTransaction()) {
+//     const uid = getTransactionUid();
+    
+//     findTransactionByUid(uid);
+// }
+firebase.auth().onAuthStateChanged(user => {
+    if (user){
+        if (!isNewTransaction()) {
+            const uid = getTransactionUid();
+            findTransactionByUid(uid);
+        }
+    }
+})
 
 function getTransactionUid() {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('uid');
+    const uid = urlParams.get('uid')
+    return uid;
 }
 
 function isNewTransaction() {
@@ -15,8 +24,9 @@ function isNewTransaction() {
 
 function findTransactionByUid(uid) {
     showLoading();
-
+    
     transactionService.findByUid(uid).then(transaction => {
+        // console.log('tá chamando ' + uid)
         hideLoading();
         if(transaction) {
             fillTransactionScreen(transaction);
@@ -34,7 +44,8 @@ function findTransactionByUid(uid) {
 }
 
 function fillTransactionScreen(transaction) {
-    if (transaction.type == 'expense') {
+    // console.log(transaction)
+    if (transaction.type == "expense") {
         form.typeExpense().checked = true;
     } else {
         form.typeIncome().checked = true;
@@ -60,16 +71,6 @@ function saveTransaction() {
     } else {
         update(transaction);
     }
-
-    // firebase.firestore().collection('transactions').add(transaction).then(() => {
-    //     hideLoading();
-    //     window.location.href = "../home/home.html"
-    // }).catch(() => {
-    //     hideLoading();
-    //     alert('Erro ao salvar transação');
-    // });
-
-    // console.log(transaction);
 }
 
 function save(transaction) {
@@ -161,17 +162,32 @@ function isFormValid() {
 }
 
 const form = {
+    currency: () => document.getElementById('currency'),
     date: () => document.getElementById('date'),
+    description: () => document.getElementById('description'),
     dateRequiredError: () => document.getElementById('date-required-error'),
-    value: () => document.getElementById('value'),
-    valueRequiredError: () => document.getElementById('value-required-error'),
-    valueLessOrEqualToZero: () => document.getElementById('value-less-or-equal-to-zero-error'),
-    transactionTypeRequiredError: () => document.getElementById('transaction-type-required-error'),
-    transactionType: () => document.getElementById('transaction-type'),
     saveButton: () => document.getElementById('save-button'),
+    transactionType: () => document.getElementById('transaction-type'),
+    transactionTypeRequiredError: () => document.getElementById('transaction-type-required-error'),
     typeExpense: () => document.getElementById('expense'),
     typeIncome: () => document.getElementById('income'),
-    currency: () => document.getElementById('currency'),
-    transactionType: () => document.getElementById('transaction-type'),
-    description: () => document.getElementById('description')
+    value: () => document.getElementById('value'),
+    valueRequiredError: () => document.getElementById('value-required-error'),
+    valueLessOrEqualToZeroError: () => document.getElementById('value-less-or-equal-to-zero-error')
 }
+
+// const form = {
+//     date: () => document.getElementById('date'),
+//     dateRequiredError: () => document.getElementById('date-required-error'),
+//     value: () => document.getElementById('value'),
+//     valueRequiredError: () => document.getElementById('value-required-error'),
+//     valueLessOrEqualToZero: () => document.getElementById('value-less-or-equal-to-zero-error'),
+//     transactionTypeRequiredError: () => document.getElementById('transaction-type-required-error'),
+//     transactionType: () => document.getElementById('transaction-type'),
+//     saveButton: () => document.getElementById('save-button'),
+//     typeExpense: () => document.getElementById('expense'),
+//     typeIncome: () => document.getElementById('income'),
+//     currency: () => document.getElementById('currency'),
+//     transactionType: () => document.getElementById('transaction-type'),
+//     description: () => document.getElementById('description')
+// }

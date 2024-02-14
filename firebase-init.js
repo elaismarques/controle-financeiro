@@ -10,6 +10,15 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
+    // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    // .then(function() {
+    // console.log("Persistencia configurada com sucesso");
+    // })
+    // .catch(function(error) {
+    // console.log("Erro na configuração da persistencia de sessão");
+    // });
+
+
     // firebase.auth().onAuthStateChanged(function(user) {
     //     if (user) {
     //         window.location.href = "../home/home.html";
